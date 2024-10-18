@@ -306,6 +306,94 @@ body.active {
 }
 
 /*-----------------------------------*\
+  #GALLERY-PAGE
+\*-----------------------------------*/
+
+.photo-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.photo-gallery-item {
+  width: 400px;
+  height: 500px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.photo-gallery-item:hover {
+  transform: scale(1.05);
+}
+
+.gallery-page-title {
+  font-size: var(--fs-2);
+  color: hsl(0, 0%, 100%);
+  font-family: var(--ff-recoleta);
+  text-align: center;
+}
+
+#gallery-page {
+  margin-top: 10px;
+}
+
+/*-----------------------------------*\
+  #MODAL-POPUP
+\*-----------------------------------*/
+.modal {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.modal.active {
+  display: flex;
+}
+
+.modal-content {
+  max-width: 80%;
+  max-height: 80%;
+  object-fit: contain;
+  margin: auto;
+}
+
+.close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.prev,
+.next {
+  position: absolute;
+  top: 50%;
+  color: white;
+  font-size: 50px;
+  cursor: pointer;
+  transform: translateY(-50%);
+}
+
+.prev {
+  left: 10px;
+}
+
+.next {
+  right: 10px;
+}
+
+/*-----------------------------------*\
   #LOADING
 \*-----------------------------------*/
 
@@ -1003,6 +1091,85 @@ body.active {
 
 .cursor {
   display: none;
+}
+
+/* Lightbox Modal Styles */
+.lightbox-modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.9
+  ); /* Darker background for better visibility */
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox-content {
+  max-width: 100%;
+  max-height: 100%;
+  margin: auto;
+  display: block;
+  width: auto;
+  height: auto;
+}
+
+.prev,
+.next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  transition: 0.3s;
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.5
+  ); /* Semi-transparent background for better visibility */
+}
+
+.prev {
+  left: 10px; /* Adjusted for spacing */
+}
+
+.next {
+  right: 10px; /* Adjusted for spacing */
+}
+
+.close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: white;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Make sure modal content is responsive */
+@media (max-width: 768px) {
+  .prev,
+  .next {
+    font-size: 16px;
+    padding: 10px;
+  }
+
+  .lightbox-content {
+    max-width: 90%;
+    max-height: 90%;
+  }
 }
 
 /*-----------------------------------*\

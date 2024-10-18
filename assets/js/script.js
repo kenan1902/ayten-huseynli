@@ -1,6 +1,4 @@
-'use strict';
-
-
+"use strict";
 
 // add Event on multiple elment
 
@@ -8,9 +6,7 @@ const addEventOnElements = function (elements, eventType, callback) {
   for (let i = 0; i < elements.length; i++) {
     elements[i].addEventListener(eventType, callback);
   }
-}
-
-
+};
 
 // PRELOADING
 
@@ -21,22 +17,20 @@ window.addEventListener("load", function () {
   document.body.classList.remove("active");
 });
 
-
-
 // MOBILE NAV TOGGLE
 
 const [navTogglers, navLinks, navbar, overlay] = [
   document.querySelectorAll("[data-nav-toggler]"),
   document.querySelectorAll("[data-nav-link]"),
   document.querySelector("[data-navbar]"),
-  document.querySelector("[data-overlay]")
+  document.querySelector("[data-overlay]"),
 ];
 
 const toggleNav = function () {
   navbar.classList.toggle("active");
   overlay.classList.toggle("active");
   document.body.classList.toggle("active");
-}
+};
 
 addEventOnElements(navTogglers, "click", toggleNav);
 
@@ -44,11 +38,9 @@ const closeNav = function () {
   navbar.classList.remove("active");
   overlay.classList.remove("active");
   document.body.classList.remove("active");
-}
+};
 
 addEventOnElements(navLinks, "click", closeNav);
-
-
 
 // HEADER
 
@@ -60,11 +52,9 @@ const activeElementOnScroll = function () {
   } else {
     header.classList.remove("active");
   }
-}
+};
 
 window.addEventListener("scroll", activeElementOnScroll);
-
-
 
 /**
  * TEXT ANIMATION EFFECT FOR HERO SECTION
@@ -77,7 +67,6 @@ let lastActiveLetterBoxIndex = 0;
 let totalLetterBoxDelay = 0;
 
 const setLetterEffect = function () {
-
   // loop through all letter boxes
   for (let i = 0; i < letterBoxes.length; i++) {
     // set initial animation delay
@@ -90,7 +79,6 @@ const setLetterEffect = function () {
 
     // loop through all letters
     for (let j = 0; j < letters.length; j++) {
-
       // create a span
       const span = document.createElement("span");
 
@@ -118,7 +106,6 @@ const setLetterEffect = function () {
       if (j >= letters.length - 1) break;
       // otherwise update
       letterAnimationDelay += 0.05;
-
     }
 
     // get total delay of active letter box
@@ -132,24 +119,22 @@ const setLetterEffect = function () {
     } else {
       letterBoxes[i].classList.remove("active");
     }
-
   }
 
   setTimeout(function () {
     lastActiveLetterBoxIndex = activeLetterBoxIndex;
 
     // update activeLetterBoxIndex based on total letter boxes
-    activeLetterBoxIndex >= letterBoxes.length - 1 ? activeLetterBoxIndex = 0 : activeLetterBoxIndex++;
+    activeLetterBoxIndex >= letterBoxes.length - 1
+      ? (activeLetterBoxIndex = 0)
+      : activeLetterBoxIndex++;
 
     setLetterEffect();
-  }, (totalLetterBoxDelay * 1000) + 3000);
-
-}
+  }, totalLetterBoxDelay * 1000 + 3000);
+};
 
 // call the letter effect function after window loaded
 window.addEventListener("load", setLetterEffect);
-
-
 
 /**
  * BACK TO TOP BUTTON
@@ -173,8 +158,6 @@ window.addEventListener("scroll", function () {
   }
 });
 
-
-
 /**
  * SCROLL REVEAL
  */
@@ -183,7 +166,8 @@ const revealElements = document.querySelectorAll("[data-reveal]");
 
 const scrollReveal = function () {
   for (let i = 0; i < revealElements.length; i++) {
-    const elementIsInScreen = revealElements[i].getBoundingClientRect().top < window.innerHeight / 1.15;
+    const elementIsInScreen =
+      revealElements[i].getBoundingClientRect().top < window.innerHeight / 1.15;
 
     if (elementIsInScreen) {
       revealElements[i].classList.add("revealed");
@@ -191,13 +175,11 @@ const scrollReveal = function () {
       revealElements[i].classList.remove("revealed");
     }
   }
-}
+};
 
 window.addEventListener("scroll", scrollReveal);
 
 scrollReveal();
-
-
 
 /**
  * CUSTOM CURSOR
@@ -216,10 +198,14 @@ document.body.addEventListener("mousemove", function (event) {
 });
 
 // add cursor hoverd class
-const hoverActive = function () { cursor.classList.add("hovered"); }
+const hoverActive = function () {
+  cursor.classList.add("hovered");
+};
 
 // remove cursor hovered class
-const hoverDeactive = function () { cursor.classList.remove("hovered"); }
+const hoverDeactive = function () {
+  cursor.classList.remove("hovered");
+};
 
 // add hover effect on cursor, when hover on any button or hyperlink
 addEventOnElements(anchorElements, "mouseover", hoverActive);
@@ -236,3 +222,39 @@ document.body.addEventListener("mouseout", function () {
 document.body.addEventListener("mouseover", function () {
   cursor.classList.remove("disabled");
 });
+
+// Modal functionality
+const modal = document.getElementById("image-modal");
+const modalImg = document.getElementById("modal-img");
+const closeBtn = document.querySelector(".close");
+const images = document.querySelectorAll(".photo-gallery-item");
+let currentImageIndex;
+
+// Hide modal by default
+modal.classList.remove("active");
+
+// Open modal when an image is clicked
+images.forEach((img, index) => {
+  img.addEventListener("click", function () {
+    modal.classList.add("active");
+    modalImg.src = this.src;
+    currentImageIndex = index; // Keep track of the current image index
+  });
+});
+
+// Close modal
+closeBtn.onclick = function () {
+  modal.classList.remove("active");
+};
+
+// Navigate to the next image
+document.querySelector(".next").onclick = function () {
+  currentImageIndex = (currentImageIndex + 1) % images.length; // Loop back to the first image
+  modalImg.src = images[currentImageIndex].src;
+};
+
+// Navigate to the previous image
+document.querySelector(".prev").onclick = function () {
+  currentImageIndex = (currentImageIndex - 1 + images.length) % images.length; // Loop back to the last image
+  modalImg.src = images[currentImageIndex].src;
+};
