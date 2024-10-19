@@ -258,3 +258,71 @@ document.querySelector(".prev").onclick = function () {
   currentImageIndex = (currentImageIndex - 1 + images.length) % images.length; // Loop back to the last image
   modalImg.src = images[currentImageIndex].src;
 };
+
+// EmailJS
+function SendMail() {
+  var fullName = document.getElementById("fullName").value;
+  var email = document.getElementById("email").value;
+  var message = document.getElementById("message").value;
+
+  // Validate Full Name (only letters)
+  var nameRegex = /^[A-Za-z\s]+$/;
+  if (!nameRegex.test(fullName)) {
+    Toastify({
+      text: "Full Name must contain only letters.",
+      backgroundColor: "#ff5f6d",
+      duration: 3000,
+      gravity: "top",
+      position: "center",
+      className: "toast-error",
+    }).showToast();
+    return;
+  }
+
+  // Validate Email
+  var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    Toastify({
+      text: "Please enter a valid email address.",
+      backgroundColor: "#ff5f6d",
+      duration: 3000,
+      gravity: "top",
+      position: "center",
+      className: "toast-error",
+    }).showToast();
+    return;
+  }
+
+  // If validation passes, proceed with sending the email
+  var params = {
+    from_name: fullName,
+    email: email,
+    message: message,
+  };
+
+  emailjs
+    .send("service_93b62l6", "template_x4djlxs", params)
+    .then(function (res) {
+      Toastify({
+        text: "Your message has been sent.",
+        backgroundColor: "#00b09b",
+        duration: 3000,
+        gravity: "top",
+        position: "center",
+        className: "toast-success",
+      }).showToast();
+      document.getElementById("fullName").value = "";
+      document.getElementById("email").value = "";
+      document.getElementById("message").value = "";
+    })
+    .catch(function (err) {
+      Toastify({
+        text: "Your message could not be sent.",
+        backgroundColor: "#ff5f6d",
+        duration: 3000,
+        gravity: "top",
+        position: "center",
+        className: "toast-error",
+      }).showToast();
+    });
+}
