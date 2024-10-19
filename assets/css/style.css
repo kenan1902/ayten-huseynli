@@ -946,6 +946,10 @@ body.active {
   gap: 45px;
 }
 
+.a-em {
+  text-decoration: underline;
+}
+
 .about .wrapper,
 .about-banner {
   padding-inline-start: 45px;
